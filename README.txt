@@ -1,18 +1,18 @@
-# Caffè Pomodoro – iPhone Web-App
+# Caffè Pomodoro – iPhone PWA v2
 
-Diese Version ist als Progressive Web App (PWA) vorbereitet.
+- iPhone-first interface
+- Desktop installation UI and keyboard shortcuts removed
+- Timer uses absolute timestamps so it can be reconciled after iOS suspends the app
+- PWA manifest + service worker + iPhone icons included
 
-## Auf dem iPhone
-1. Die Dateien müssen einmal über eine HTTPS-Adresse erreichbar sein.
-2. Die Seite in **Safari** öffnen.
-3. **Teilen** → **Zum Home-Bildschirm** → **Hinzufügen**.
-4. Danach startet Caffè Pomodoro wie eine eigene App.
+Important iOS limitation:
+A Home Screen web app cannot reliably keep arbitrary JavaScript running while suspended, and a web PWA cannot provide a native-style live countdown/Live Activity on the iPhone Lock Screen. Web Push can provide an end-of-phase notification, but that requires a push service/server.
 
-## Wichtig
-Die App nutzt weiterhin einige externe Bibliotheken/Fonts. Nach dem ersten Laden können diese vom Service Worker zwischengespeichert werden. KI-Funktionen benötigen weiterhin Internetzugang.
-
-## Dateien
-- `index.html` – die App
-- `manifest.json` – App-Definition
-- `service-worker.js` – Offline-/Caching-Unterstützung
-- `icons/` – App-Icons
+iPhone-Hinweis
+--------------
+Diese Version bleibt vollständig im bestehenden GitHub-Pages-Setup.
+Der Timer kann beim Wiederöffnen anhand der echten Endzeit korrigiert werden.
+Eine Benachrichtigung kann angezeigt werden, solange iOS der Web-App noch
+Ausführungszeit gibt bzw. beim Wiederöffnen. Eine garantiert zeitgenaue
+Benachrichtigung bei vollständig suspendierter/geschlossener PWA ist ohne
+externen Push-Server technisch nicht möglich.

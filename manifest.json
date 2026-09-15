@@ -1,7 +1,7 @@
 {
-  "name": "Caffè Pomodoro · Bottega del Tempo",
-  "short_name": "Caffè Pomodoro",
-  "description": "Retro-Pomodoro-Timer mit Aufgaben, Statistiken und Fokusmodus.",
+  "name": "Caffè Pomodoro",
+  "short_name": "Pomodoro",
+  "description": "Caffè Pomodoro – fokussiertes Arbeiten auf dem iPhone.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
