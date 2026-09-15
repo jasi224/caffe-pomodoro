@@ -132,7 +132,6 @@
 <link href="icons/icon-192.png" rel="apple-touch-icon" sizes="192x192"/>
 <link href="icons/icon-512.png" rel="apple-touch-icon" sizes="512x512"/>
 <meta content="yes" name="mobile-web-app-capable"/>
-
 <style id="iphone-v5">
   html { -webkit-text-size-adjust: 100%; }
   body {
@@ -165,8 +164,6 @@
     #toast-banner { left: 14px !important; right: 14px !important; bottom: calc(14px + env(safe-area-inset-bottom)) !important; }
   }
 </style>
-
-
 <style id="iphone-layout-fix-v51">
 @media (max-width: 640px) {
   /* iOS Home-Screen PWA: keep branding below status bar */
@@ -198,8 +195,6 @@
   }
 }
 </style>
-
-
 <style id="mode-active-fix-v52">
 .mode-tab.active,
 .mode-tab.active span,
@@ -214,7 +209,13 @@
   color: #FAF5EE !important;
 }
 </style>
-
+<style id="switch-style-v53">
+#settings-modal input[type="checkbox"]{-webkit-appearance:none!important;appearance:none!important;width:51px!important;height:31px!important;min-width:51px!important;border:0!important;border-radius:999px!important;background:#d8cec0!important;position:relative!important;cursor:pointer;transition:background .18s ease;box-shadow:inset 0 0 0 1px rgba(28,18,12,.08)}
+#settings-modal input[type="checkbox"]::after{content:"";position:absolute;width:27px;height:27px;left:2px;top:2px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(28,18,12,.25);transition:transform .18s ease}
+#settings-modal input[type="checkbox"]:checked{background:#1C120C!important}
+#settings-modal input[type="checkbox"]:checked::after{transform:translateX(20px)}
+#settings-modal label:has(input[type="checkbox"]){min-height:58px;align-items:center}
+</style>
 </head>
 <body class="bg-vintage-paper text-espresso-900 font-sans min-h-full flex flex-col justify-between selection:bg-terracotta selection:text-white antialiased">
 <header class="border-b border-crema-300 bg-crema-100/90 backdrop-blur-sm sticky top-0 z-30 shadow-xs">
@@ -253,7 +254,7 @@
 <!-- Settings Modal Opener -->
 <button class="p-2.5 rounded-xl border border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 transition-all shadow-xs cursor-pointer active:scale-95" id="open-settings-btn" title="Regolazioni (Einstellungen)">
 <i class="fa-solid fa-sliders text-base"></i>
-</button>
+</button><button aria-label="Info" class="p-2 rounded-full border border-espresso-200 hover:bg-crema-200 transition-colors w-11 h-11 flex items-center justify-center font-serif font-bold text-xl" id="info-btn" title="Info" type="button">i</button>
 </div>
 </div>
 </header>
@@ -352,8 +353,6 @@
             </button>
 </div>
 </form>
-
-
 <!-- Dynamic Task List -->
 <div class="mt-4 space-y-2.5 max-h-64 overflow-y-auto pr-1" id="task-list">
 <!-- Dynamically populated via JS -->
@@ -499,10 +498,6 @@
 <span class="text-sm sm:text-base font-medium text-espresso-900">🔊 Gesamten Ton aktivieren (Master-Ton)</span>
 <input checked="" class="w-5 h-5 accent-terracotta cursor-pointer" id="input-master-sound" type="checkbox"/>
 </label>
-
-
-
-
 <!-- Vintage Bell Option -->
 <label class="flex items-center justify-between p-2.5 rounded-xl bg-crema-100 border border-crema-300 cursor-pointer">
 <span class="text-sm sm:text-base font-medium text-espresso-900">🔔 Messingglocke (Campana d'Oro)</span>
@@ -532,8 +527,6 @@
 </div>
 </div>
 </div>
-
-
 <script>
     // State of Caffè Pomodoro
     const state = {
@@ -811,8 +804,8 @@ function switchMode(newMode, resetTimer = true) {
 
         // Prolonged visual alerts (12 seconds)
         startVisualAlarm('Fokusphase geschafft!', 'Zeit für einen kräftigen Espresso.');
-        showToast('🍅 Pomodoro raccolto!', 'Bravo – gönn deinen Augen und deinem Geist eine Pause.', '🍅');
-        sendDesktopNotification('🍅 Pomodoro raccolto!', 'Bravo – gönn deinen Augen und deinem Geist eine Pause');
+        showToast('🍅 Pomodoro raccolto!', 'Bravo - gönne dir eine Pause und genieße deinen Caffè ☕️.', '🍅');
+        sendDesktopNotification('🍅 Pomodoro raccolto!', 'Bravo - gönne dir eine Pause und genieße deinen Caffè ☕️');
 
         // Switch to short or long break
         if (state.completedPomodoros % 4 === 0) {
@@ -1314,7 +1307,7 @@ if ('serviceWorker' in navigator) {
           if (reg) {
             await reg.showNotification(
               state.mode === 'focus' ? '🍅 Pomodoro raccolto!' : '☕ Pause beendet',
-              { body: state.mode === 'focus' ? 'Bravo – gönn deinen Augen und deinem Geist eine Pause' : 'Bereit für die nächste Fokusphase.',
+              { body: state.mode === 'focus' ? 'Bravo - gönne dir eine Pause und genieße deinen Caffè ☕️' : 'Bereit für die nächste Fokusphase.',
                 icon: './icons/icon-192.png', badge: './icons/icon-192.png',
                 tag: 'caffe-pomodoro-timer', renotify: true }
             );
@@ -1330,6 +1323,25 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('pageshow', reconcileTimer);
   window.addEventListener('focus', reconcileTimer);
   reconcileTimer();
+})();
+</script>
+
+<div id="info-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-5 bg-espresso-950/40 backdrop-blur-sm" aria-hidden="true">
+<div class="relative w-full max-w-sm bg-crema-50 border border-espresso-200 rounded-[28px] shadow-2xl p-7 text-espresso-950">
+<button id="info-close-btn" type="button" aria-label="Info schließen" class="absolute top-4 right-4 w-11 h-11 rounded-full border border-espresso-200 flex items-center justify-center text-xl">×</button>
+<div class="pr-8">
+<h2 class="font-serif text-2xl font-bold leading-tight mb-4">Benvenuti al Caffè Pomodoro! 🍅☕</h2>
+<p class="leading-relaxed text-base">Timer stellen, Aufgaben abhaken, Tomaten ernten. Dazwischen: Espresso-Bar-White Noise genießen und Inspiration für deine nächste Pause finden.</p>
+<p class="font-serif font-bold text-lg mt-5">Prima il lavoro, poi il caffè.</p>
+</div></div></div>
+<script id="info-modal-script">
+(() => {
+ const btn=document.getElementById('info-btn'), modal=document.getElementById('info-modal'), close=document.getElementById('info-close-btn');
+ if(!btn||!modal||!close)return;
+ const open=()=>{modal.classList.remove('hidden');modal.classList.add('flex');modal.setAttribute('aria-hidden','false');};
+ const shut=()=>{modal.classList.add('hidden');modal.classList.remove('flex');modal.setAttribute('aria-hidden','true');};
+ btn.addEventListener('click',open); close.addEventListener('click',shut);
+ modal.addEventListener('click',e=>{if(e.target===modal)shut();});
 })();
 </script>
 </body>
