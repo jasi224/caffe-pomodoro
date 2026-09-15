@@ -166,6 +166,39 @@
   }
 </style>
 
+
+<style id="iphone-layout-fix-v51">
+@media (max-width: 640px) {
+  /* iOS Home-Screen PWA: keep branding below status bar */
+  header {
+    padding-top: max(env(safe-area-inset-top), 22px);
+  }
+
+  /* Three mode choices: compact single-line labels, no ugly wrapping */
+  .mode-tab {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 10px 7px !important;
+    gap: 5px !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    font-size: 13px !important;
+  }
+  .mode-tab > span:last-child {
+    white-space: nowrap !important;
+    font-size: 13px !important;
+    letter-spacing: -0.02em !important;
+  }
+  .mode-tab > span:first-child {
+    flex: 0 0 auto;
+  }
+  main > div:first-child {
+    width: 100% !important;
+    overflow-x: visible !important;
+  }
+}
+</style>
+
 </head>
 <body class="bg-vintage-paper text-espresso-900 font-sans min-h-full flex flex-col justify-between selection:bg-terracotta selection:text-white antialiased">
 <header class="border-b border-crema-300 bg-crema-100/90 backdrop-blur-sm sticky top-0 z-30 shadow-xs">
@@ -213,15 +246,15 @@
 <div class="inline-flex p-1.5 rounded-2xl bg-crema-200/90 border border-crema-300 shadow-inner mb-6 sm:mb-8 max-w-full overflow-x-auto">
 <button class="mode-tab active px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base transition-all duration-200 flex items-center space-x-2 bg-espresso-900 text-crema-50 shadow-md" id="mode-work">
 <span>🍅</span>
-<span class="font-serif tracking-wide">Lavoro (25 min.)</span>
+<span class="font-serif tracking-wide">Lavoro · 25 min.</span>
 </button>
 <button class="mode-tab px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base text-espresso-800 hover:text-espresso-900 transition-all duration-200 flex items-center space-x-2" id="mode-short">
 <span>☕</span>
-<span class="font-serif tracking-wide">Pausa Corta (5 min.)</span>
+<span class="font-serif tracking-wide">Corta · 5 min.</span>
 </button>
 <button class="mode-tab px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base text-espresso-800 hover:text-espresso-900 transition-all duration-200 flex items-center space-x-2" id="mode-long">
 <span>🌿</span>
-<span class="font-serif tracking-wide">Pausa Lunga (15 min.)</span>
+<span class="font-serif tracking-wide">Lunga · 15 min.</span>
 </button>
 </div>
 <!-- Analog Clock Dial Section -->
@@ -1166,9 +1199,9 @@ function switchMode(newMode, resetTimer = true) {
           await requestNotificationPermission();
         }
 
-        document.querySelector('#mode-work span:last-child').textContent = `Lavoro (${inputWork.value} min.)`;
-        document.querySelector('#mode-short span:last-child').textContent = `Pausa Corta (${inputShort.value} min.)`;
-        document.querySelector('#mode-long span:last-child').textContent = `Pausa Lunga (${inputLong.value} min.)`;
+        document.querySelector('#mode-work span:last-child').textContent = `Lavoro · ${inputWork.value} min.`;
+        document.querySelector('#mode-short span:last-child').textContent = `Corta · ${inputShort.value} min.`;
+        document.querySelector('#mode-long span:last-child').textContent = `Lunga · ${inputLong.value} min.`;
 
         if (!state.isRunning) {
           state.timeLeft = state.durations[state.mode];
