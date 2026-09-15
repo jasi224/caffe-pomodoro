@@ -209,13 +209,47 @@
   color: #FAF5EE !important;
 }
 </style>
-<style id="switch-style-v53">
-#settings-modal input[type="checkbox"]{-webkit-appearance:none!important;appearance:none!important;width:51px!important;height:31px!important;min-width:51px!important;border:0!important;border-radius:999px!important;background:#d8cec0!important;position:relative!important;cursor:pointer;transition:background .18s ease;box-shadow:inset 0 0 0 1px rgba(28,18,12,.08)}
-#settings-modal input[type="checkbox"]::after{content:"";position:absolute;width:27px;height:27px;left:2px;top:2px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(28,18,12,.25);transition:transform .18s ease}
-#settings-modal input[type="checkbox"]:checked{background:#1C120C!important}
-#settings-modal input[type="checkbox"]:checked::after{transform:translateX(20px)}
-#settings-modal label:has(input[type="checkbox"]){min-height:58px;align-items:center}
+
+<style id="mode-layout-fix-v54">
+@media (max-width: 640px) {
+  #mode-work, #mode-short, #mode-long {
+    flex: 1 1 33.333% !important;
+    min-width: 0 !important;
+    padding: 10px 3px !important;
+    gap: 3px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+  #mode-work > span:first-child,
+  #mode-short > span:first-child,
+  #mode-long > span:first-child {
+    display: block !important;
+    line-height: 1 !important;
+    font-size: 18px !important;
+    flex: 0 0 auto !important;
+  }
+  #mode-work > span:last-child,
+  #mode-short > span:last-child,
+  #mode-long > span:last-child {
+    display: block !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    font-size: clamp(10px, 3.05vw, 13px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.035em !important;
+  }
+  #mode-long > span:first-child {
+    letter-spacing: -0.25em !important;
+    padding-right: 0.25em !important;
+  }
+}
 </style>
+
 </head>
 <body class="bg-vintage-paper text-espresso-900 font-sans min-h-full flex flex-col justify-between selection:bg-terracotta selection:text-white antialiased">
 <header class="border-b border-crema-300 bg-crema-100/90 backdrop-blur-sm sticky top-0 z-30 shadow-xs">
@@ -254,7 +288,7 @@
 <!-- Settings Modal Opener -->
 <button class="p-2.5 rounded-xl border border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 transition-all shadow-xs cursor-pointer active:scale-95" id="open-settings-btn" title="Regolazioni (Einstellungen)">
 <i class="fa-solid fa-sliders text-base"></i>
-</button><button aria-label="Info" class="p-2 rounded-full border border-espresso-200 hover:bg-crema-200 transition-colors w-11 h-11 flex items-center justify-center font-serif font-bold text-xl" id="info-btn" title="Info" type="button">i</button>
+</button><button aria-label="Info" class="w-12 h-12 rounded-xl border border-espresso-200 bg-white flex items-center justify-center font-serif font-bold text-xl shadow-sm" id="info-btn" title="Info" type="button">i</button>
 </div>
 </div>
 </header>
@@ -1325,10 +1359,9 @@ if ('serviceWorker' in navigator) {
   reconcileTimer();
 })();
 </script>
-
-<div id="info-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-5 bg-espresso-950/40 backdrop-blur-sm" aria-hidden="true">
+<div aria-hidden="true" class="fixed inset-0 z-[70] hidden items-center justify-center p-5 bg-espresso-950/40 backdrop-blur-sm" id="info-modal">
 <div class="relative w-full max-w-sm bg-crema-50 border border-espresso-200 rounded-[28px] shadow-2xl p-7 text-espresso-950">
-<button id="info-close-btn" type="button" aria-label="Info schließen" class="absolute top-4 right-4 w-11 h-11 rounded-full border border-espresso-200 flex items-center justify-center text-xl">×</button>
+<button aria-label="Info schließen" class="absolute top-4 right-4 w-11 h-11 rounded-full border border-espresso-200 flex items-center justify-center text-xl" id="info-close-btn" type="button">×</button>
 <div class="pr-8">
 <h2 class="font-serif text-2xl font-bold leading-tight mb-4">Benvenuti al Caffè Pomodoro! 🍅☕</h2>
 <p class="leading-relaxed text-base">Timer stellen, Aufgaben abhaken, Tomaten ernten. Dazwischen: Espresso-Bar-White Noise genießen und Inspiration für deine nächste Pause finden.</p>
