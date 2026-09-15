@@ -1,13 +1,13 @@
 {
   "name": "Caffè Pomodoro",
-  "short_name": "Pomodoro",
+  "short_name": "Caffè Pomodoro",
   "description": "Caffè Pomodoro – fokussiertes Arbeiten auf dem iPhone.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#FAF5EE",
-  "theme_color": "#1C120C",
+  "theme_color": "#FAF5EE",
   "icons": [
     {
       "src": "icons/icon-192.png",
