@@ -1,0 +1,12 @@
+OK — JavaScript syntaktisch gültig
+OK — Gemini vollständig entfernt
+OK — Felicità-Funktion vollständig entfernt
+OK — Desktop-Tastaturkürzel entfernt
+OK — Tik-Tak standardmäßig aktiv
+OK — Aufgabenfeld geändert
+OK — Neue Pomodoro-Mitteilung
+OK — Minutenformat angepasst
+OK — Schwarze Retro-Stoppuhr-Striche
+OK — iPhone PWA Manifest
+OK — Service Worker v5
+OK — Tomaten-Icons

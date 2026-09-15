@@ -1,27 +1,1217 @@
 <!DOCTYPE html>
-<html lang="de" class="h-full">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>🍅 Caffè Pomodoro · Bottega del Tempo</title>
-  <!-- Tomato Favicon as SVG Data URL -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍅</text></svg>">
-  
-  <!-- Web App Manifest (Data URI for Single-File PWA Desktop Installation) -->
-  <link rel="manifest" href="data:application/manifest+json;utf8,%7B%22name%22%3A%22Caff%C3%A8%20Pomodoro%20%C2%B7%20Bottega%20del%20Tempo%22%2C%22short_name%22%3A%22Caff%C3%A8%20Pomodoro%22%2C%22description%22%3A%22Vintage%20italienischer%20Pomodoro%20Timer%20f%C3%BCr%20fokussiertes%20Arbeiten.%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FAF5EE%22%2C%22theme_color%22%3A%22%231C120C%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%8D%85%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Caffè Pomodoro">
-  <meta name="theme-color" content="#1C120C">
 
-  <!-- Tailwind CSS CDN -->
+<html class="h-full" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>🍅 Caffè Pomodoro · Bottega del Tempo</title>
+<!-- Tomato Favicon as SVG Data URL -->
+<link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🍅&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<!-- Web App Manifest (Data URI for Single-File PWA Desktop Installation) -->
+<link href="manifest.json" rel="manifest"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Caffè Pomodoro" name="apple-mobile-web-app-title"/>
+<meta content="#1C120C" name="theme-color"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Google Fonts: Bodoni Moda, Newsreader, Playfair Display, Courier Prime & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;0,6..96,800;1,6..96,400;1,6..96,600&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<!-- FontAwesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<!-- Tone.js for Web Audio Synthesis -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            crema: {
+              50: '#FDFBF7',
+              100: '#FAF5EE',
+              200: '#F3E9DA',
+              300: '#EAD7BF',
+              400: '#DCBF9C',
+              500: '#CCA377',
+            },
+            espresso: {
+              950: '#150D08',
+              900: '#1C120C',
+              800: '#2C1B13',
+              700: '#3D261B',
+              600: '#523424',
+              500: '#6C4530',
+            },
+            terracotta: {
+              DEFAULT: '#C85A32',
+              dark: '#A6421D',
+              light: '#DE734C',
+            },
+            ottone: {
+              light: '#F5DE98',
+              DEFAULT: '#D4AF37',
+              dark: '#9E7C1B',
+            },
+            salvia: '#5B7059',
+            rosso: '#BD281E',
+          },
+          fontFamily: {
+            bodoni: ['"Bodoni Moda"', 'serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            typewriter: ['"Courier Prime"', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Subtle vintage Italian cafe paper texture */
+    .bg-vintage-paper {
+      background-color: #FAF5EE;
+      background-image: 
+        radial-gradient(#d3c5b2 0.75px, transparent 0.75px), 
+        radial-gradient(#d3c5b2 0.75px, #FAF5EE 0.75px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+
+    /* Heavy brass dial rim with authentic mechanical depth */
+    .dial-brass-rim {
+      background: radial-gradient(circle at 35% 30%, #FFF3B8 0%, #E6C875 20%, #B89025 50%, #7A5B0B 80%, #4D3906 100%);
+      box-shadow: 0 25px 50px -12px rgba(28, 18, 12, 0.45),
+                  inset 0 2px 5px rgba(255, 255, 255, 0.8),
+                  inset 0 -5px 12px rgba(0, 0, 0, 0.6);
+      transition: box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    /* Antique cream enamel clockface */
+    .dial-face {
+      background: radial-gradient(circle at center, #FFFFFF 0%, #FCF9F3 65%, #F0E6D4 100%);
+      box-shadow: inset 0 6px 18px rgba(44, 27, 19, 0.3),
+                  inset 0 0 60px rgba(212, 175, 55, 0.12);
+    }
+
+    /* Prolonged glowing alarm animation when timer completes */
+    @keyframes vintage-alarm-pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(189, 40, 30, 0.7),
+                    0 25px 50px -12px rgba(189, 40, 30, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 50px 20px rgba(200, 90, 50, 0.85),
+                    0 25px 55px 6px rgba(189, 40, 30, 0.75);
+      }
+    }
+
+    .alarm-glow {
+      animation: vintage-alarm-pulse 1.3s infinite ease-in-out !important;
+    }
+
+    /* Italian wax seal crest */
+    .wax-seal {
+      background: radial-gradient(circle at 35% 35%, #DC382B, #8B1A12);
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.35), 
+                  inset -2px -2px 5px rgba(0,0,0,0.4), 
+                  inset 2px 2px 4px rgba(255,255,255,0.35);
+    }
+
+    /* Lined vintage notepad paper */
+    .notepad-lines {
+      background-image: repeating-linear-gradient(#FDFBF7 0px, #FDFBF7 31px, #EAD7BF 32px);
+      line-height: 32px;
+    }
+
+    /* Custom range sliders */
+    input[type=range] {
+      accent-color: #C85A32;
+    }
+  </style>
+<link href="icons/icon-192.png" rel="apple-touch-icon" sizes="192x192"/>
+<link href="icons/icon-512.png" rel="apple-touch-icon" sizes="512x512"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+
+<style id="iphone-v5">
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior-y: none;
+  }
+  button, select, input, textarea { font-size: 16px; }
+  button, [role="button"], select { min-height: 44px; touch-action: manipulation; }
+
+  /* Schwarze Striche wie bei einer mechanischen Retro-Stoppuhr */
+  .dial-brass-rim {
+    background: repeating-conic-gradient(
+      from 0deg,
+      #1C120C 0deg 1.35deg,
+      transparent 1.35deg 6deg
+    ) !important;
+    box-shadow: 0 18px 38px -16px rgba(28,18,12,.42) !important;
+    padding: 13px !important;
+  }
+  .dial-face {
+    box-shadow: inset 0 3px 12px rgba(44,27,19,.18) !important;
+  }
+
+  @media (max-width: 640px) {
+    header > div { padding-left: 14px !important; padding-right: 14px !important; }
+    main { padding-left: 14px !important; padding-right: 14px !important; }
+    #brass-bezel-outer { width: min(82vw, 330px) !important; height: min(82vw, 330px) !important; }
+    #toast-banner { left: 14px !important; right: 14px !important; bottom: calc(14px + env(safe-area-inset-bottom)) !important; }
+  }
+</style>
+
+</head>
+<body class="bg-vintage-paper text-espresso-900 font-sans min-h-full flex flex-col justify-between selection:bg-terracotta selection:text-white antialiased">
+<header class="border-b border-crema-300 bg-crema-100/90 backdrop-blur-sm sticky top-0 z-30 shadow-xs">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+<!-- Brand Crest & Italian Bottega Typography -->
+<div class="flex items-center space-x-3.5">
+<div class="w-12 h-12 rounded-full wax-seal flex items-center justify-center text-crema-100 shadow-md text-2xl select-none">
+<span class="transform -rotate-6">🍅</span>
+</div>
+<div>
+<h1 class="font-bodoni text-2xl sm:text-3xl font-bold tracking-tight text-espresso-900 leading-none">
+            Caffè Pomodoro
+          </h1>
+<p class="font-typewriter text-xs sm:text-sm text-espresso-600 tracking-wider uppercase mt-1">
+            Bottega del Tempo · Dal 1962
+          </p>
+</div>
+</div>
+<!-- Quick Control Buttons in Navigation -->
+<div class="flex items-center space-x-2 sm:space-x-3 text-sm">
+<!-- Master Mute Toggle Button -->
+<button class="flex items-center space-x-2 px-3.5 py-2 rounded-xl border border-crema-300 bg-crema-50 hover:bg-white text-espresso-900 transition-all shadow-xs cursor-pointer active:scale-95" id="master-sound-btn" title="Sämtliche Töne stummschalten">
+<i class="fa-solid fa-volume-high text-sm text-ottone-dark" id="master-sound-icon"></i>
+<span class="font-medium text-xs sm:text-sm" id="master-sound-label">Ton An</span>
+</button>
+<!-- Mechanical Ticking Toggle (Tic-Tac) -->
+<button class="flex items-center space-x-2 px-3 py-2 rounded-xl border border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 transition-all shadow-xs cursor-pointer active:scale-95" id="sound-toggle-btn" title="Mechanisches Ticken (Tic-Tac) an/aus">
+<i class="fa-solid fa-clock text-sm text-ottone-dark" id="sound-icon"></i>
+<span class="hidden md:inline font-medium text-xs sm:text-sm">Tic-Tac</span>
+</button>
+<!-- Ambient Barista Cafe Noise Toggle -->
+<button class="flex items-center space-x-2 px-3 py-2 rounded-xl border border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 transition-all shadow-xs cursor-pointer active:scale-95" id="ambient-toggle-btn" title="Italienisches Barista-Ambiente an/aus">
+<i class="fa-solid fa-mug-hot text-sm opacity-50" id="ambient-icon"></i>
+<span class="hidden md:inline font-medium text-xs sm:text-sm">Ambiente</span>
+</button>
+<!-- Settings Modal Opener -->
+<button class="p-2.5 rounded-xl border border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 transition-all shadow-xs cursor-pointer active:scale-95" id="open-settings-btn" title="Regolazioni (Einstellungen)">
+<i class="fa-solid fa-sliders text-base"></i>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col items-center">
+<!-- Mode Selection: Lavoro, Pausa Corta, Pausa Lunga -->
+<div class="inline-flex p-1.5 rounded-2xl bg-crema-200/90 border border-crema-300 shadow-inner mb-6 sm:mb-8 max-w-full overflow-x-auto">
+<button class="mode-tab active px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base transition-all duration-200 flex items-center space-x-2 bg-espresso-900 text-crema-50 shadow-md" id="mode-work">
+<span>🍅</span>
+<span class="font-serif tracking-wide">Lavoro (25 min.)</span>
+</button>
+<button class="mode-tab px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base text-espresso-800 hover:text-espresso-900 transition-all duration-200 flex items-center space-x-2" id="mode-short">
+<span>☕</span>
+<span class="font-serif tracking-wide">Pausa Corta (5 min.)</span>
+</button>
+<button class="mode-tab px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base text-espresso-800 hover:text-espresso-900 transition-all duration-200 flex items-center space-x-2" id="mode-long">
+<span>🌿</span>
+<span class="font-serif tracking-wide">Pausa Lunga (15 min.)</span>
+</button>
+</div>
+<!-- Analog Clock Dial Section -->
+<div class="relative flex items-center justify-center my-3 sm:my-5">
+<!-- Brass Outer Bezel with Visual Pulse Alarm Glow -->
+<div class="dial-brass-rim w-72 h-72 sm:w-88 sm:h-88 md:w-96 md:h-96 rounded-full p-4 sm:p-5 flex items-center justify-center transition-all duration-300" id="brass-bezel-outer">
+<!-- Inner Cream Clockface -->
+<div class="dial-face w-full h-full rounded-full relative flex flex-col items-center justify-center p-6 border-2 border-crema-400 select-none">
+<!-- Circular Progress SVG Ring -->
+<svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none p-3" viewbox="0 0 100 100">
+<!-- Subtle background track -->
+<circle cx="50" cy="50" fill="none" opacity="0.45" r="45" stroke="#EAD7BF" stroke-width="2.5"></circle>
+<!-- Animated dynamic progress ring -->
+<circle class="transition-all duration-1000 ease-linear" cx="50" cy="50" fill="none" id="progress-ring" r="45" stroke="#C85A32" stroke-dasharray="282.74" stroke-dashoffset="0" stroke-linecap="round" stroke-width="3.5"></circle>
+</svg>
+<!-- Cardinal Vintage Hour/Minute Markings -->
+<span class="absolute top-3.5 font-typewriter text-xs sm:text-sm font-bold text-espresso-700">60</span>
+<span class="absolute right-4 font-typewriter text-xs sm:text-sm font-bold text-espresso-700">15</span>
+<span class="absolute bottom-3.5 font-typewriter text-xs sm:text-sm font-bold text-espresso-700">30</span>
+<span class="absolute left-4 font-typewriter text-xs sm:text-sm font-bold text-espresso-700">45</span>
+<!-- Phase Label Badge -->
+<div class="font-serif italic text-xs sm:text-sm text-terracotta tracking-wider uppercase font-bold mb-1" id="phase-badge">
+            Tempo di Lavoro
+          </div>
+<!-- Large Readable Digits Countdown Display -->
+<div class="font-bodoni font-extrabold text-6xl sm:text-7xl md:text-8xl text-espresso-900 tracking-tight leading-none py-1" id="time-display">
+            25:00
+          </div>
+<!-- Currently Active Task Label -->
+<div class="mt-2 text-center max-w-[210px] truncate text-xs sm:text-sm text-espresso-700 font-typewriter bg-crema-200/90 px-3.5 py-1 rounded-full border border-crema-300" id="active-task-display">
+            Nessun compito
+          </div>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-4 sm:space-x-5 mt-4 sm:mt-6">
+<!-- Reset Current Interval Button -->
+<button class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 flex items-center justify-center transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer" id="reset-btn" title="Phase neu starten">
+<i class="fa-solid fa-rotate-left text-lg"></i>
+</button>
+<!-- Main Play/Pause Button (Vintage Terracotta Gradient) -->
+<button class="px-8 sm:px-12 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-terracotta to-terracotta-dark hover:from-terracotta-light hover:to-terracotta text-white font-serif font-bold text-lg sm:text-xl tracking-wide shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center space-x-3 cursor-pointer" id="toggle-btn">
+<i class="fa-solid fa-play text-base sm:text-lg" id="toggle-icon"></i>
+<span id="toggle-text">Inizia</span>
+</button>
+<!-- Skip to Next Phase Button -->
+<button class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-crema-300 bg-crema-50 hover:bg-white text-espresso-800 flex items-center justify-center transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer" id="skip-btn" title="Nächste Phase überspringen">
+<i class="fa-solid fa-forward-step text-lg"></i>
+</button>
+</div>
+<section class="w-full mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Notebook (Taccuino dei Compiti) -->
+<div class="md:col-span-2 bg-crema-50 border border-crema-300 rounded-2xl p-5 sm:p-6 shadow-md relative overflow-hidden">
+<!-- Header -->
+<div class="flex items-center justify-between pb-3 border-b border-crema-300">
+<div class="flex items-center space-x-2.5">
+<span class="text-xl">📓</span>
+<h2 class="font-serif font-bold text-lg sm:text-xl text-espresso-900">
+              Taccuino dei Compiti
+            </h2>
+</div>
+<span class="font-typewriter text-xs sm:text-sm text-espresso-600 bg-crema-200 px-2.5 py-1 rounded-full" id="task-counter">
+            0 Aufgaben
+          </span>
+</div>
+<!-- Task Input Bar -->
+<form class="mt-4 flex flex-col sm:flex-row gap-2" id="task-form">
+<input class="flex-1 bg-white border border-crema-300 rounded-xl px-4 py-2.5 text-sm sm:text-base text-espresso-900 focus:outline-none focus:ring-2 focus:ring-terracotta focus:border-transparent font-sans placeholder:text-espresso-400" id="task-input" placeholder="Woran möchtest du arbeiten" type="text"/>
+<div class="flex items-center space-x-2">
+<!-- Pomodoros estimation -->
+<select class="bg-white border border-crema-300 rounded-xl px-3 py-2.5 text-sm sm:text-base font-sans text-espresso-800 focus:outline-none" id="task-pomos-select">
+<option value="1">1 🍅 (25 min.)</option>
+<option value="2">2 🍅 (50 min.)</option>
+<option value="3">3 🍅 (75 min.)</option>
+<option value="4">4 🍅 (100 min.)</option>
+</select>
+<button class="px-4 py-2.5 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-medium text-sm sm:text-base transition-all shadow-sm active:scale-95 cursor-pointer" type="submit">
+<i class="fa-solid fa-plus mr-1"></i> Aggiungi
+            </button>
+</div>
+</form>
+
+
+<!-- Dynamic Task List -->
+<div class="mt-4 space-y-2.5 max-h-64 overflow-y-auto pr-1" id="task-list">
+<!-- Dynamically populated via JS -->
+</div>
+</div>
+<!-- Right Column: Stats & Barista Advice -->
+<div class="flex flex-col gap-6">
+<!-- Daily Harvest (Raccolto del Giorno) -->
+<div class="bg-crema-50 border border-crema-300 rounded-2xl p-5 shadow-md">
+<div class="flex items-center space-x-2 pb-3 border-b border-crema-300">
+<span class="text-lg">🧺</span>
+<h3 class="font-serif font-bold text-base sm:text-lg text-espresso-900">Raccolto di Oggi</h3>
+</div>
+<div class="mt-4 flex items-center justify-around text-center">
+<div>
+<div class="font-bodoni font-bold text-3xl sm:text-4xl text-terracotta" id="stat-pomodoros">0</div>
+<div class="text-xs sm:text-sm text-espresso-600 font-serif mt-0.5">Pomodori</div>
+</div>
+<div class="w-px h-10 bg-crema-300"></div>
+<div>
+<div class="font-bodoni font-bold text-3xl sm:text-4xl text-espresso-900" id="stat-minutes">0</div>
+<div class="text-xs sm:text-sm text-espresso-600 font-serif mt-0.5">Minuti Focus</div>
+</div>
+</div>
+<!-- Stamp tray -->
+<div class="mt-4 pt-3 border-t border-dashed border-crema-300 flex flex-wrap gap-1.5 min-h-[36px]" id="stamps-container">
+<span class="text-xs font-typewriter text-espresso-400 italic">Noch keine Tomaten geerntet...</span>
+</div>
+</div>
+<!-- Pausa Intelligente (Barista Wellness Rituals) -->
+<div class="bg-crema-50 border border-crema-300 rounded-2xl p-5 shadow-md flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 border-b border-crema-300">
+<div class="flex items-center space-x-2">
+<span class="text-lg">☕</span>
+<h3 class="font-serif font-bold text-base sm:text-lg text-espresso-900">Pausa Intelligente</h3>
+</div>
+<button class="text-xs text-terracotta hover:underline cursor-pointer" id="refresh-break-tip-btn" title="Neuen Ratschlag anfordern">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+</button>
+</div>
+<p class="font-sans text-xs sm:text-sm text-espresso-800 mt-3 leading-relaxed" id="break-tip-text">
+              Trink nach einem intensiven Fokusblock ein Glas Wasser, roll die Schultern und blick für 30 Sekunden aus dem Fenster ins Grüne.
+            </p>
+</div>
+<div class="mt-3 pt-2 border-t border-crema-200 flex justify-between items-center text-xs text-espresso-500 font-typewriter">
+<span>Consiglio del Barista</span>
+<span>Espresso &amp; Focus</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Motto del Giorno / Italian Proverb Card -->
+<div class="w-full max-w-5xl mt-6 bg-crema-200/60 border border-crema-300 rounded-xl p-4 text-center relative shadow-xs">
+<p class="font-serif italic text-sm sm:text-base text-espresso-800" id="daily-quote">
+        „Chi va piano va sano e va lontano.“
+      </p>
+<p class="font-typewriter text-xs sm:text-sm text-espresso-600 mt-1" id="daily-quote-author">
+        Wer es ruhig angeht, kommt gesund und weit. (Tradizionale)
+      </p>
+<button class="absolute right-3 top-3 text-espresso-400 hover:text-terracotta transition-colors text-xs cursor-pointer" id="new-quote-btn" title="Neues Zitat laden">
+<i class="fa-solid fa-sparkles"></i>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-crema-300 bg-crema-100 py-4 mt-8">
+<div class="max-w-5xl mx-auto px-4 text-center font-typewriter text-xs sm:text-sm text-espresso-600">
+      Caffè Pomodoro · Fatto con cura &amp; passione · Studio &amp; Lavoro sereno
+    </div>
+</footer>
+<!-- 12-Second In-App Toast Banner with manual Close Cross -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-500 max-w-md bg-crema-50 border-2 border-ottone rounded-2xl p-4 shadow-2xl flex items-start space-x-3.5" id="toast-banner">
+<div class="text-3xl select-none pt-0.5" id="toast-icon">🍅</div>
+<div class="flex-1 pr-2">
+<h4 class="font-serif font-bold text-base text-espresso-900" id="toast-title">Avviso</h4>
+<p class="text-xs sm:text-sm text-espresso-700 mt-0.5 leading-snug" id="toast-message">Die Phase ist beendet.</p>
+</div>
+<button class="text-espresso-400 hover:text-espresso-900 p-1 cursor-pointer" id="close-toast-btn" title="Schließen">
+<i class="fa-solid fa-xmark text-sm"></i>
+</button>
+</div>
+<!-- Settings Modal (Regolazioni) with 1-minute minimum sliders -->
+<div class="fixed inset-0 z-50 bg-espresso-950/60 backdrop-blur-xs flex items-center justify-center p-4 hidden" id="settings-modal">
+<div class="bg-crema-50 border border-crema-300 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+<div class="flex items-center justify-between pb-4 border-b border-crema-300">
+<div class="flex items-center space-x-2">
+<span class="text-2xl">⚙️</span>
+<h3 class="font-serif font-bold text-xl text-espresso-900">Regolazioni (Einstellungen)</h3>
+</div>
+<button class="text-espresso-500 hover:text-espresso-900 p-1.5 cursor-pointer" id="close-settings-btn">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+</div>
+<!-- Time Settings with 1-Minute Minimum -->
+<div class="mt-5 space-y-4">
+<h4 class="font-serif font-bold text-sm text-espresso-800 uppercase tracking-wider">Dauer der Phasen (ab 1 Minute)</h4>
+<!-- Work duration slider (min 1 min) -->
+<div>
+<div class="flex justify-between text-sm font-medium mb-1">
+<span class="text-espresso-800">🍅 Tempo di Lavoro (Fokus)</span>
+<span class="font-typewriter text-terracotta font-bold text-sm sm:text-base" id="work-val">25 Min</span>
+</div>
+<input class="w-full cursor-pointer" id="input-work" max="60" min="1" step="1" type="range" value="25"/>
+<div class="flex justify-between text-xs text-espresso-400 font-typewriter">
+<span>1 Min</span>
+<span>30 Min</span>
+<span>60 Min</span>
+</div>
+</div>
+<!-- Short break slider (min 1 min) -->
+<div>
+<div class="flex justify-between text-sm font-medium mb-1">
+<span class="text-espresso-800">☕ Pausa Corta (Kurze Pause)</span>
+<span class="font-typewriter text-terracotta font-bold text-sm sm:text-base" id="short-val">5 Min</span>
+</div>
+<input class="w-full cursor-pointer" id="input-short" max="30" min="1" step="1" type="range" value="5"/>
+<div class="flex justify-between text-xs text-espresso-400 font-typewriter">
+<span>1 Min</span>
+<span>15 Min</span>
+<span>30 Min</span>
+</div>
+</div>
+<!-- Long break slider (min 1 min) -->
+<div>
+<div class="flex justify-between text-sm font-medium mb-1">
+<span class="text-espresso-800">🌿 Pausa Lunga (Lange Pause)</span>
+<span class="font-typewriter text-terracotta font-bold text-sm sm:text-base" id="long-val">15 Min</span>
+</div>
+<input class="w-full cursor-pointer" id="input-long" max="60" min="1" step="1" type="range" value="15"/>
+<div class="flex justify-between text-xs text-espresso-400 font-typewriter">
+<span>1 Min</span>
+<span>30 Min</span>
+<span>60 Min</span>
+</div>
+</div>
+</div>
+<!-- Audio & Alert Settings -->
+<div class="mt-6 pt-5 border-t border-crema-300 space-y-3.5">
+<h4 class="font-serif font-bold text-sm text-espresso-800 uppercase tracking-wider">Audio &amp; Klänge</h4>
+<!-- Master Sound Switch -->
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-crema-100 border border-crema-300 cursor-pointer">
+<span class="text-sm sm:text-base font-medium text-espresso-900">🔊 Gesamten Ton aktivieren (Master-Ton)</span>
+<input checked="" class="w-5 h-5 accent-terracotta cursor-pointer" id="input-master-sound" type="checkbox"/>
+</label>
+
+
+
+
+<!-- Vintage Bell Option -->
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-crema-100 border border-crema-300 cursor-pointer">
+<span class="text-sm sm:text-base font-medium text-espresso-900">🔔 Messingglocke (Campana d'Oro)</span>
+<input checked="" class="w-5 h-5 accent-terracotta cursor-pointer" id="input-bell" type="checkbox"/>
+</label>
+<!-- Auto-start intervals -->
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-crema-100 border border-crema-300 cursor-pointer">
+<span class="text-sm sm:text-base font-medium text-espresso-900">⏩ Phasen automatisch fortführen</span>
+<input class="w-5 h-5 accent-terracotta cursor-pointer" id="input-autostart" type="checkbox"/>
+</label>
+</div>
+<!-- Desktop Notifications Toggle -->
+<div class="mt-5 pt-4 border-t border-crema-300">
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-crema-100 border border-crema-300 cursor-pointer">
+<div>
+<span class="text-sm sm:text-base font-medium text-espresso-900">🔔 Mitteilungen</span>
+<p class="text-xs text-espresso-500 font-typewriter" id="notif-perm-status">Status: Berechtigung wird von iOS verwaltet</p>
+</div>
+<input checked="" class="w-5 h-5 accent-terracotta cursor-pointer" id="input-desktop-notif" type="checkbox"/>
+</label>
+</div>
+<!-- Modal Save Button -->
+<div class="mt-6 pt-4 border-t border-crema-300 flex justify-end">
+<button class="px-6 py-2.5 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-serif font-bold text-sm sm:text-base shadow-md transition-all active:scale-95 cursor-pointer" id="save-settings-btn">
+          Salva (Speichern)
+        </button>
+</div>
+</div>
+</div>
+
+
+<script>
+    // State of Caffè Pomodoro
+    const state = {
+      mode: 'work', // 'work', 'short', 'long'
+      timeLeft: 25 * 60,
+      isRunning: false,
+      timerId: null,
+      endAt: null,
+      autoStart: false,
+      soundEnabled: true, // Mechanisches Tik-Tak standardmäßig aktiv
+      bellEnabled: true,
+      masterSoundEnabled: true, // Master Mute toggle
+      ambienceEnabled: false,
+      desktopNotifEnabled: true,
+      isAlarmActive: false,
+      titleBlinkInterval: null,
+      completedPomodoros: 0,
+      totalFocusMinutes: 0,
+      durations: {
+        work: 25 * 60,
+        short: 5 * 60,
+        long: 15 * 60
+      },
+      tasks: [],
+      activeTaskId: null,
+    };
+
+    // Tone.js Audio Synth variables
+    let audioInitialized = false;
+    let tickSynth = null;
+    let bellSynth = null;
+    let cafeNoise = null;
+
+    // Initialize Tone.js audio on first user action
+    async function initAudio() {
+      if (audioInitialized) return;
+      try {
+        await Tone.start();
+        
+        // Mechanical Tick Synth (Pocket watch feel)
+        tickSynth = new Tone.MembraneSynth({
+          pitchDecay: 0.008,
+          octaves: 2,
+          oscillator: { type: "sine" },
+          envelope: { attack: 0.001, decay: 0.04, sustain: 0, release: 0.01 }
+        }).toDestination();
+        tickSynth.volume.value = -24;
+
+        // Vintage Counter Bell Synth (Warm brass harmonics)
+        bellSynth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle8" },
+          envelope: { attack: 0.01, decay: 1.4, sustain: 0.05, release: 1.8 }
+        }).toDestination();
+        bellSynth.volume.value = -10;
+
+        // Italian Barista Cafe Ambience (Filter-shaped pink noise)
+        const lowPass = new Tone.Filter(600, "lowpass").toDestination();
+        cafeNoise = new Tone.Noise("pink");
+        cafeNoise.connect(lowPass);
+        cafeNoise.volume.value = -28;
+
+        audioInitialized = true;
+      } catch (err) {
+        console.warn("Audio initialization postponed:", err);
+      }
+    }
+
+    function playMechanicalTick() {
+      if (!state.masterSoundEnabled || !state.soundEnabled || !audioInitialized || !tickSynth) return;
+      try {
+        const note = (state.timeLeft % 2 === 0) ? "C4" : "G3";
+        tickSynth.triggerAttackRelease(note, "64n");
+      } catch (e) {}
+    }
+
+    function playVintageBell() {
+      if (!state.masterSoundEnabled || !state.bellEnabled || !audioInitialized || !bellSynth) return;
+      try {
+        const now = Tone.now();
+        bellSynth.triggerAttackRelease(["C6", "G5", "E6"], 1.8, now);
+        bellSynth.triggerAttackRelease(["C7"], 1.2, now + 0.08);
+      } catch (e) {}
+    }
+
+    // DOM Elements
+    const timeDisplay = document.getElementById('time-display');
+    const phaseBadge = document.getElementById('phase-badge');
+    const progressRing = document.getElementById('progress-ring');
+    const toggleBtn = document.getElementById('toggle-btn');
+    const toggleIcon = document.getElementById('toggle-icon');
+    const toggleText = document.getElementById('toggle-text');
+    const resetBtn = document.getElementById('reset-btn');
+    const skipBtn = document.getElementById('skip-btn');
+    const brassBezelOuter = document.getElementById('brass-bezel-outer');
+    const activeTaskDisplay = document.getElementById('active-task-display');
+
+    const modeWorkBtn = document.getElementById('mode-work');
+    const modeShortBtn = document.getElementById('mode-short');
+    const modeLongBtn = document.getElementById('mode-long');
+
+    const masterSoundBtn = document.getElementById('master-sound-btn');
+    const masterSoundIcon = document.getElementById('master-sound-icon');
+    const masterSoundLabel = document.getElementById('master-sound-label');
+    const soundToggleBtn = document.getElementById('sound-toggle-btn');
+    const soundIcon = document.getElementById('sound-icon');
+    const ambientToggleBtn = document.getElementById('ambient-toggle-btn');
+    const ambientIcon = document.getElementById('ambient-icon');
+
+    const toastBanner = document.getElementById('toast-banner');
+    const toastTitle = document.getElementById('toast-title');
+    const toastMessage = document.getElementById('toast-message');
+    const toastIcon = document.getElementById('toast-icon');
+    const closeToastBtn = document.getElementById('close-toast-btn');
+
+    const settingsModal = document.getElementById('settings-modal');
+    const openSettingsBtn = document.getElementById('open-settings-btn');
+    const closeSettingsBtn = document.getElementById('close-settings-btn');
+    const saveSettingsBtn = document.getElementById('save-settings-btn');
+    const inputWork = document.getElementById('input-work');
+    const inputShort = document.getElementById('input-short');
+    const inputLong = document.getElementById('input-long');
+    const workVal = document.getElementById('work-val');
+    const shortVal = document.getElementById('short-val');
+    const longVal = document.getElementById('long-val');
+    const inputMasterSound = document.getElementById('input-master-sound');
+    const inputBell = document.getElementById('input-bell');
+    const inputAutostart = document.getElementById('input-autostart');
+    const inputDesktopNotif = document.getElementById('input-desktop-notif');
+    const notifPermStatus = document.getElementById('notif-perm-status');
+
+    const taskForm = document.getElementById('task-form');
+    const taskInput = document.getElementById('task-input');
+    const taskPomosSelect = document.getElementById('task-pomos-select');
+    const taskList = document.getElementById('task-list');
+    const taskCounter = document.getElementById('task-counter');
+    const statPomodoros = document.getElementById('stat-pomodoros');
+    const statMinutes = document.getElementById('stat-minutes');
+    const stampsContainer = document.getElementById('stamps-container');
+
+    const breakTipText = document.getElementById('break-tip-text');
+    const refreshBreakTipBtn = document.getElementById('refresh-break-tip-btn');
+    const dailyQuote = document.getElementById('daily-quote');
+    const dailyQuoteAuthor = document.getElementById('daily-quote-author');
+    const newQuoteBtn = document.getElementById('new-quote-btn');
+
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateDisplay() {
+      const timeStr = formatTime(state.timeLeft);
+      timeDisplay.textContent = timeStr;
+
+      // Update circular SVG progress
+      const totalDuration = state.durations[state.mode];
+      const circumference = 2 * Math.PI * 45; // ~282.74
+      const progress = (totalDuration - state.timeLeft) / totalDuration;
+      const offset = circumference * (1 - progress);
+      progressRing.style.strokeDashoffset = offset;
+
+      // Update Browser Title
+      if (!state.isAlarmActive) {
+        document.title = `${timeStr} · Caffè Pomodoro`;
+      }
+    }
+
+    
+function getRemainingSeconds() {
+  if (!state.isRunning || !state.endAt) return state.timeLeft;
+  return Math.max(0, Math.ceil((state.endAt - Date.now()) / 1000));
+}
+
+function syncTimer() {
+  if (!state.isRunning || !state.endAt) return;
+  const remaining = getRemainingSeconds();
+  if (remaining > 0 && remaining !== lastTickSecond) {
+    lastTickSecond = remaining;
+    playMechanicalTick();
+  }
+  if (remaining > 0) {
+    state.timeLeft = remaining;
+    updateDisplay();
+    return;
+  }
+  completePhase();
+}
+
+function startTimer() {
+  initAudio();
+  stopVisualAlarm();
+  state.isRunning = true;
+  state.endAt = Date.now() + (state.timeLeft * 1000);
+  toggleIcon.className = 'fa-solid fa-pause text-base sm:text-lg';
+  toggleText.textContent = 'Pausa';
+  clearInterval(state.timerId);
+  state.timerId = setInterval(syncTimer, 250);
+  syncTimer();
+}
+
+function pauseTimer() {
+  if (state.isRunning) {
+    state.timeLeft = getRemainingSeconds();
+  }
+  state.isRunning = false;
+  state.endAt = null;
+  lastTickSecond = null;
+  clearInterval(state.timerId);
+  toggleIcon.className = 'fa-solid fa-play text-base sm:text-lg';
+  toggleText.textContent = 'Inizia';
+  updateDisplay();
+}
+
+function restoreTimerFromBackground() {
+  if (!state.isRunning || !state.endAt) return;
+  // The absolute end time is authoritative, so the timer does not depend
+  // on JavaScript continuing to run while the app is backgrounded.
+  syncTimer();
+}
+
+function switchMode(newMode, resetTimer = true) {
+      state.mode = newMode;
+      [modeWorkBtn, modeShortBtn, modeLongBtn].forEach(btn => {
+        btn.classList.remove('bg-espresso-900', 'text-crema-50', 'shadow-md', 'active');
+        btn.classList.add('text-espresso-800');
+      });
+
+      if (newMode === 'work') {
+        modeWorkBtn.classList.add('bg-espresso-900', 'text-crema-50', 'shadow-md', 'active');
+        modeWorkBtn.classList.remove('text-espresso-800');
+        phaseBadge.textContent = 'Tempo di Lavoro';
+        progressRing.setAttribute('stroke', '#C85A32');
+      } else if (newMode === 'short') {
+        modeShortBtn.classList.add('bg-espresso-900', 'text-crema-50', 'shadow-md', 'active');
+        modeShortBtn.classList.remove('text-espresso-800');
+        phaseBadge.textContent = 'Pausa Corta';
+        progressRing.setAttribute('stroke', '#5B7059');
+      } else {
+        modeLongBtn.classList.add('bg-espresso-900', 'text-crema-50', 'shadow-md', 'active');
+        modeLongBtn.classList.remove('text-espresso-800');
+        phaseBadge.textContent = 'Pausa Lunga';
+        progressRing.setAttribute('stroke', '#D4AF37');
+      }
+
+      if (resetTimer) {
+        pauseTimer();
+        stopVisualAlarm();
+        state.timeLeft = state.durations[newMode];
+        updateDisplay();
+      }
+    }
+
+    function completePhase() {
+      pauseTimer();
+      const currentMode = state.mode;
+
+      if (currentMode === 'work') {
+        state.completedPomodoros++;
+        state.totalFocusMinutes += Math.round(state.durations.work / 60);
+        updateStats();
+
+        // Increment active task pomodoro count
+        if (state.activeTaskId) {
+          const activeTask = state.tasks.find(t => t.id === state.activeTaskId);
+          if (activeTask) {
+            activeTask.actualPomos = (activeTask.actualPomos || 0) + 1;
+            renderTasks();
+          }
+        }
+
+        // Play sounds
+        playVintageBell();
+
+        // Prolonged visual alerts (12 seconds)
+        startVisualAlarm('Fokusphase geschafft!', 'Zeit für einen kräftigen Espresso.');
+        showToast('🍅 Pomodoro raccolto!', 'Bravo – gönn deinen Augen und deinem Geist eine Pause.', '🍅');
+        sendDesktopNotification('🍅 Pomodoro raccolto!', 'Bravo – gönn deinen Augen und deinem Geist eine Pause');
+
+        // Switch to short or long break
+        if (state.completedPomodoros % 4 === 0) {
+          switchMode('long', false);
+          state.timeLeft = state.durations.long;
+        } else {
+          switchMode('short', false);
+          state.timeLeft = state.durations.short;
+        }
+      } else {
+        playVintageBell();
+        startVisualAlarm('Pausa finita!', 'Der Geist ist erfrischt.');
+        showToast('🔔 Pausa Terminata!', 'Die Pause ist vorüber. Bereit für die nächste Konzentration?', '☕');
+        sendDesktopNotification('☕ Pause beendet!', 'Zurück ans Werk mit frischer Energie.');
+        switchMode('work', false);
+        state.timeLeft = state.durations.work;
+      }
+
+      updateDisplay();
+
+      if (state.autoStart) {
+        setTimeout(startTimer, 1500);
+      }
+    }
+
+    // 12-Second Toast Banner logic
+    let toastTimeout = null;
+    function showToast(title, message, icon = '🍅') {
+      clearTimeout(toastTimeout);
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+      toastIcon.textContent = icon;
+      toastBanner.classList.remove('translate-y-32', 'opacity-0');
+      toastBanner.classList.add('translate-y-0', 'opacity-100');
+
+      // Stays visible for 12 seconds
+      toastTimeout = setTimeout(hideToast, 12000);
+    }
+
+    function hideToast() {
+      clearTimeout(toastTimeout);
+      toastBanner.classList.add('translate-y-32', 'opacity-0');
+      toastBanner.classList.remove('translate-y-0', 'opacity-100');
+    }
+
+    if (closeToastBtn) {
+      closeToastBtn.addEventListener('click', hideToast);
+    }
+
+    function startVisualAlarm(titleText) {
+      state.isAlarmActive = true;
+      if (brassBezelOuter) brassBezelOuter.classList.add('alarm-glow');
+
+      clearInterval(state.titleBlinkInterval);
+      let toggle = false;
+      state.titleBlinkInterval = setInterval(() => {
+        toggle = !toggle;
+        document.title = toggle ? `🔔 FERTIG! · ${titleText}` : `🍅 Caffè Pomodoro`;
+      }, 700);
+    }
+
+    function stopVisualAlarm() {
+      state.isAlarmActive = false;
+      if (brassBezelOuter) brassBezelOuter.classList.remove('alarm-glow');
+      clearInterval(state.titleBlinkInterval);
+      updateDisplay();
+    }
+
+    async function requestNotificationPermission() {
+      if (!("Notification" in window)) return;
+      try {
+        const perm = await Notification.requestPermission();
+        updateNotificationStatusLabel(perm);
+      } catch (e) {
+        console.warn("Notification request failed:", e);
+      }
+    }
+
+    function updateNotificationStatusLabel(perm) {
+      if (!notifPermStatus) return;
+      if (perm === "granted") {
+        notifPermStatus.textContent = "Status: Erlaubt ✓";
+        notifPermStatus.className = "text-xs text-salvia font-typewriter font-semibold";
+      } else if (perm === "denied") {
+        notifPermStatus.textContent = "Status: Blockiert im Browser ✕";
+        notifPermStatus.className = "text-xs text-rosso font-typewriter";
+      } else {
+        notifPermStatus.textContent = "Status: Nicht angefragt";
+        notifPermStatus.className = "text-xs text-espresso-500 font-typewriter";
+      }
+    }
+
+    async function sendDesktopNotification(title, body) {
+      if (!state.desktopNotifEnabled || !("Notification" in window) || Notification.permission !== "granted") return;
+      const options = {
+        body,
+        icon: "./icons/icon-192.png",
+        badge: "./icons/icon-192.png",
+        tag: "caffe-pomodoro",
+        renotify: true,
+        silent: false
+      };
+      try {
+        if ("serviceWorker" in navigator) {
+          const reg = await navigator.serviceWorker.ready;
+          await reg.showNotification(title, options);
+        } else {
+          new Notification(title, options);
+        }
+      } catch (err) {
+        console.warn("Notification error:", err);
+      }
+    }
+
+    function toggleMasterSound(forcedState = null) {
+      state.masterSoundEnabled = forcedState !== null ? forcedState : !state.masterSoundEnabled;
+
+      if (state.masterSoundEnabled) {
+        masterSoundBtn.classList.remove('bg-rosso/10', 'border-rosso/50', 'text-rosso');
+        masterSoundBtn.classList.add('bg-crema-50', 'border-crema-300', 'text-espresso-900');
+        masterSoundIcon.className = 'fa-solid fa-volume-high text-sm text-ottone-dark';
+        if (masterSoundLabel) masterSoundLabel.textContent = 'Ton An';
+        if (inputMasterSound) inputMasterSound.checked = true;
+        showToast('Audio Aktiv', 'Alle Töne und Melodien sind eingeschaltet.', '🔊');
+      } else {
+        masterSoundBtn.classList.add('bg-rosso/10', 'border-rosso/50', 'text-rosso');
+        masterSoundBtn.classList.remove('bg-crema-50', 'border-crema-300', 'text-espresso-900');
+        masterSoundIcon.className = 'fa-solid fa-volume-xmark text-sm text-rosso';
+        if (masterSoundLabel) masterSoundLabel.textContent = 'Stumm';
+        if (inputMasterSound) inputMasterSound.checked = false;
+
+        if (state.ambienceEnabled && cafeNoise) {
+          try { cafeNoise.stop(); } catch(e) {}
+        }
+        showToast('Stummgeschaltet', 'Sämtliche Töne wurden stummgeschaltet.', '🔇');
+      }
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+      taskCounter.textContent = `${state.tasks.length} ${state.tasks.length === 1 ? 'Aufgabe' : 'Aufgaben'}`;
+
+      if (state.tasks.length === 0) {
+        taskList.innerHTML = `
+          <div class="text-center py-6 font-typewriter text-xs sm:text-sm text-espresso-400">
+            Noch keine Aufgaben notiert.<br>Trag dein erstes Ziel für heute ein!
+          </div>
+        `;
+        activeTaskDisplay.textContent = 'Nessun compito';
+        return;
+      }
+
+      state.tasks.forEach(task => {
+        const div = document.createElement('div');
+        const isActive = task.id === state.activeTaskId;
+        div.className = `p-3 rounded-xl border transition-all flex items-center justify-between gap-3 ${
+          task.completed ? 'bg-crema-100/50 border-crema-300 opacity-60' :
+          isActive ? 'bg-crema-200/90 border-terracotta shadow-xs' : 'bg-white border-crema-300 hover:border-crema-400'
+        }`;
+
+        const pomosDisplay = '🍅'.repeat(task.actualPomos || 0) + '⚪'.repeat(Math.max(0, task.estPomos - (task.actualPomos || 0)));
+
+        div.innerHTML = `
+          <div class="flex items-center space-x-3 min-w-0 flex-1">
+            <input type="checkbox" ${task.completed ? 'checked' : ''} data-id="${task.id}" 
+                   class="task-toggle w-5 h-5 rounded accent-terracotta cursor-pointer">
+            <div class="truncate cursor-pointer task-select flex-1" data-id="${task.id}">
+              <div class="font-sans text-sm sm:text-base ${task.completed ? 'line-through text-espresso-400' : 'text-espresso-900 font-medium'} truncate">
+                ${escapeHtml(task.title)}
+              </div>
+              <div class="text-xs sm:text-sm text-espresso-500 font-typewriter mt-0.5">
+                ${pomosDisplay} (${task.actualPomos || 0}/${task.estPomos} Pomodori)
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center space-x-1.5 shrink-0">
+            ${!task.completed ? `
+              <button class="task-select-btn px-2.5 py-1 text-xs sm:text-sm rounded-lg ${isActive ? 'bg-terracotta text-white' : 'bg-crema-200 text-espresso-800 hover:bg-crema-300'} font-serif transition-colors cursor-pointer" data-id="${task.id}">
+                ${isActive ? 'Aktiv ✓' : 'Wählen'}
+              </button>
+            ` : ''}
+            <button class="task-delete-btn text-espresso-400 hover:text-rosso p-1.5 transition-colors cursor-pointer" data-id="${task.id}" title="Löschen">
+              <i class="fa-regular fa-trash-can text-sm sm:text-base"></i>
+            </button>
+          </div>
+        `;
+
+        taskList.appendChild(div);
+      });
+
+      const active = state.tasks.find(t => t.id === state.activeTaskId);
+      activeTaskDisplay.textContent = active ? active.title : 'Nessun compito';
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function updateStats() {
+      statPomodoros.textContent = state.completedPomodoros;
+      statMinutes.textContent = state.totalFocusMinutes;
+
+      if (state.completedPomodoros > 0) {
+        stampsContainer.innerHTML = '';
+        for (let i = 0; i < state.completedPomodoros; i++) {
+          const span = document.createElement('span');
+          span.className = 'text-xl sm:text-2xl inline-block transform hover:scale-125 transition-transform select-none';
+          span.textContent = '🍅';
+          span.title = `Pomodoro #${i + 1} abgeschlossen`;
+          stampsContainer.appendChild(span);
+        }
+      }
+    }
+    // Lokale Pausentipps und Zitate – vollständig offline.
+    const localBreakTips = [
+      "Trink ein Glas Wasser, roll die Schultern und blick für 30 Sekunden in die Ferne.",
+      "Steh kurz auf, streck dich und gönn deinen Augen eine Minute ohne Bildschirm.",
+      "Öffne das Fenster, atme fünfmal ruhig ein und aus und lass den Blick schweifen.",
+      "Mach ein paar Schritte, lockere Nacken und Hände und komm dann mit frischem Kopf zurück."
+    ];
+    let breakTipIndex = 0;
+    function requestLocalBreakTip() {
+      breakTipIndex = (breakTipIndex + 1) % localBreakTips.length;
+      breakTipText.textContent = localBreakTips[breakTipIndex];
+    }
+
+    const localQuotes = [
+      ["„Chi va piano va sano e va lontano.“", "Wer es ruhig angeht, kommt gesund und weit. (Tradizionale)"],
+      ["„Poco a poco si fa tutto.“", "Schritt für Schritt gelingt alles. (Tradizionale)"],
+      ["„Il tempo è galantuomo.“", "Die Zeit bringt die Dinge ans Licht. (Tradizionale)"]
+    ];
+    let quoteIndex = 0;
+    function requestLocalQuote() {
+      quoteIndex = (quoteIndex + 1) % localQuotes.length;
+      dailyQuote.textContent = localQuotes[quoteIndex][0];
+      dailyQuoteAuthor.textContent = localQuotes[quoteIndex][1];
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateDisplay();
+      renderTasks();
+
+      // Timer Controls
+      toggleBtn.addEventListener('click', () => {
+        if (state.isRunning) pauseTimer();
+        else startTimer();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        stopVisualAlarm();
+        pauseTimer();
+        state.timeLeft = state.durations[state.mode];
+        updateDisplay();
+      });
+
+      skipBtn.addEventListener('click', () => {
+        stopVisualAlarm();
+        completePhase();
+      });
+
+      // Mode Switch Buttons
+      modeWorkBtn.addEventListener('click', () => switchMode('work', true));
+      modeShortBtn.addEventListener('click', () => switchMode('short', true));
+      modeLongBtn.addEventListener('click', () => switchMode('long', true));
+
+      // Master Mute Button
+      masterSoundBtn.addEventListener('click', async () => {
+        await initAudio();
+        toggleMasterSound();
+      });
+
+      // Tic-Tac Sound Button
+      soundToggleBtn.addEventListener('click', async () => {
+        await initAudio();
+        state.soundEnabled = !state.soundEnabled;
+        if (state.soundEnabled) {
+          soundIcon.className = 'fa-solid fa-clock text-sm text-ottone-dark';
+          showToast('Tic-Tac Aktiv', 'Das mechanische Ticken begleitet deine Fokusphase.', '🕰️');
+        } else {
+          soundIcon.className = 'fa-solid fa-clock text-sm opacity-50';
+        }
+      });
+
+      // Ambient Cafe Noise Button
+      ambientToggleBtn.addEventListener('click', async () => {
+        await initAudio();
+        state.ambienceEnabled = !state.ambienceEnabled;
+        if (state.ambienceEnabled && state.masterSoundEnabled) {
+          try { cafeNoise.start(); } catch(e){}
+          ambientIcon.className = 'fa-solid fa-mug-hot text-sm text-terracotta';
+          showToast('Caffè Ambiente', 'Italienische Espresso-Bar Hintergrundkulisse aktiviert.', '☕');
+        } else {
+          try { cafeNoise.stop(); } catch(e){}
+          ambientIcon.className = 'fa-solid fa-mug-hot text-sm opacity-50';
+        }
+      });
+
+      // Task Form Handling
+      taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = taskInput.value.trim();
+        if (!text) return;
+
+        const newTask = {
+          id: Date.now().toString(),
+          title: text,
+          estPomos: parseInt(taskPomosSelect.value, 10) || 1,
+          actualPomos: 0,
+          completed: false
+        };
+
+        state.tasks.push(newTask);
+        if (!state.activeTaskId) state.activeTaskId = newTask.id;
+        taskInput.value = '';
+        renderTasks();
+      });
+
+      // Task Item Clicks
+      taskList.addEventListener('click', (e) => {
+        const toggle = e.target.closest('.task-toggle');
+        const deleteBtn = e.target.closest('.task-delete-btn');
+        const selectBtn = e.target.closest('.task-select-btn') || e.target.closest('.task-select');
+
+        if (toggle) {
+          const id = toggle.dataset.id;
+          const t = state.tasks.find(x => x.id === id);
+          if (t) {
+            t.completed = toggle.checked;
+            if (t.completed && state.activeTaskId === id) {
+              const next = state.tasks.find(x => !x.completed);
+              state.activeTaskId = next ? next.id : null;
+            }
+            renderTasks();
+          }
+        } else if (deleteBtn) {
+          const id = deleteBtn.dataset.id;
+          state.tasks = state.tasks.filter(x => x.id !== id);
+          if (state.activeTaskId === id) {
+            const next = state.tasks.find(x => !x.completed);
+            state.activeTaskId = next ? next.id : null;
+          }
+          renderTasks();
+        } else if (selectBtn) {
+          const id = selectBtn.dataset.id;
+          state.activeTaskId = id;
+          renderTasks();
+        }
+      });
+
+      // Settings Modal Open/Close
+      openSettingsBtn.addEventListener('click', () => {
+        inputWork.value = Math.round(state.durations.work / 60);
+        workVal.textContent = `${inputWork.value} Min`;
+
+        inputShort.value = Math.round(state.durations.short / 60);
+        shortVal.textContent = `${inputShort.value} Min`;
+
+        inputLong.value = Math.round(state.durations.long / 60);
+        longVal.textContent = `${inputLong.value} Min`;
+
+        inputMasterSound.checked = state.masterSoundEnabled;
+        inputAutostart.checked = state.autoStart;
+        inputBell.checked = state.bellEnabled;
+        inputDesktopNotif.checked = state.desktopNotifEnabled;
+
+        if ("Notification" in window) {
+          updateNotificationStatusLabel(Notification.permission);
+        }
+
+        settingsModal.classList.remove('hidden');
+      });
+
+      closeSettingsBtn.addEventListener('click', () => {
+        settingsModal.classList.add('hidden');
+      });
+
+      // Settings Slider Live Labels
+      inputWork.addEventListener('input', (e) => { workVal.textContent = `${e.target.value} Min`; });
+      inputShort.addEventListener('input', (e) => { shortVal.textContent = `${e.target.value} Min`; });
+      inputLong.addEventListener('input', (e) => { longVal.textContent = `${e.target.value} Min`; });
+
+      inputDesktopNotif.addEventListener('change', async (e) => {
+        if (e.target.checked) await requestNotificationPermission();
+      });
+
+      // Save Settings with 1-minute minimum persistence
+      saveSettingsBtn.addEventListener('click', async () => {
+        state.durations.work = parseInt(inputWork.value, 10) * 60;
+        state.durations.short = parseInt(inputShort.value, 10) * 60;
+        state.durations.long = parseInt(inputLong.value, 10) * 60;
+        state.autoStart = inputAutostart.checked;
+        state.bellEnabled = inputBell.checked;
+        state.desktopNotifEnabled = inputDesktopNotif.checked;
+
+        toggleMasterSound(inputMasterSound.checked);
+
+        if (state.desktopNotifEnabled) {
+          await requestNotificationPermission();
+        }
+
+        document.querySelector('#mode-work span:last-child').textContent = `Lavoro (${inputWork.value} min.)`;
+        document.querySelector('#mode-short span:last-child').textContent = `Pausa Corta (${inputShort.value} min.)`;
+        document.querySelector('#mode-long span:last-child').textContent = `Pausa Lunga (${inputLong.value} min.)`;
+
+        if (!state.isRunning) {
+          state.timeLeft = state.durations[state.mode];
+          updateDisplay();
+        }
+
+        settingsModal.classList.add('hidden');
+        showToast('Gespeichert', 'Zeiten & Klänge erfolgreich kalibriert.', '⏱️');
+      });
+      // Lokale Pausentipps und Zitate
+      refreshBreakTipBtn.addEventListener('click', requestLocalBreakTip);
+      newQuoteBtn.addEventListener('click', requestLocalQuote);
+      // iPhone-Version: keine Desktop-Installation und keine Tastaturkürzel.
+
+    });
   
+// iPhone/PWA lifecycle: always reconcile the timer with real time when
+// the app becomes visible again. This works even if iOS suspended JS.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    restoreTimerFromBackground();
+    if (typeof initAudio === 'function' && audioInitialized === false) {
+      // Audio will still require a user gesture on iOS; the button below
+      // can explicitly unlock it.
+    }
+  }
+});
+window.addEventListener('pageshow', restoreTimerFromBackground);
+window.addEventListener('focus', restoreTimerFromBackground);
+
+// Unlock audio explicitly from a user gesture. This is more reliable on iOS
+// than waiting until the end of a Pomodoro to initialize audio.
+const audioUnlockButton = document.getElementById('toggle-btn');
+if (audioUnlockButton) {
+  audioUnlockButton.addEventListener('pointerdown', () => { initAudio(); }, {passive:true});
+}
+
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 }
 </script>
-
 <script id="iphone-reliability">
 (() => {
   const KEY = 'caffePomodoroReliableTimer';
@@ -93,68 +1283,5 @@ if ('serviceWorker' in navigator) {
   reconcileTimer();
 })();
 </script>
-
-
-<script id="tiktok-v4">
-(() => {
-  let ctx, interval = null, enabled = true, flip = false;
-
-  function ensureAudio() {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume().catch(()=>{});
-  }
-  function click(freq) {
-    if (!enabled || !ctx || ctx.state !== 'running') return;
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = 'square'; o.frequency.value = freq;
-    g.gain.setValueAtTime(0.035, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.025);
-    o.connect(g); g.connect(ctx.destination);
-    o.start(); o.stop(ctx.currentTime + 0.03);
-  }
-  function startTicking() {
-    ensureAudio();
-    if (interval) return;
-    click(1150);
-    interval = setInterval(() => { flip=!flip; click(flip ? 1150 : 900); }, 1000);
-  }
-  function stopTicking() {
-    if (interval) clearInterval(interval);
-    interval = null;
-  }
-
-  document.addEventListener('click', e => {
-    const el = e.target.closest('button,[role="button"]');
-    if (!el) return;
-    const t = (el.textContent || '').trim().toLowerCase();
-    if (/start|fortsetzen|weiter/.test(t)) startTicking();
-    if (/pause|stop|zurücksetzen|reset/.test(t)) stopTicking();
-  }, {passive:true});
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopTicking();
-  });
-
-  window.CaffeTickTock = { start:startTicking, stop:stopTicking, setEnabled:v=>{enabled=!!v;if(!enabled)stopTicking();} };
-})();
-</script>
-
-
-<div id="ios-notification-optin" style="max-width:520px;margin:12px auto;padding:0 16px;">
-  <button type="button" id="enable-notifications-v4"
-    style="width:100%;padding:12px 16px;border:1px solid #1C120C;border-radius:12px;background:#FAF5EE;color:#1C120C;font-weight:600;">
-    Mitteilungen aktivieren
-  </button>
-</div>
-<script>
-document.getElementById('enable-notifications-v4')?.addEventListener('click', async () => {
-  const ok = await window.enablePomodoroNotifications?.();
-  if (ok) document.getElementById('ios-notification-optin')?.remove();
-});
-if ('Notification' in window && Notification.permission === 'granted') {
-  document.getElementById('ios-notification-optin')?.remove();
-}
-</script>
-
 </body>
 </html>
