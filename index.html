@@ -199,13 +199,29 @@
 }
 </style>
 
+
+<style id="mode-active-fix-v52">
+.mode-tab.active,
+.mode-tab.active span,
+.mode-tab.bg-espresso-900,
+.mode-tab.bg-espresso-900 span {
+  color: #FAF5EE !important;
+}
+#mode-short.active,
+#mode-long.active,
+#mode-work.active {
+  background-color: #1C120C !important;
+  color: #FAF5EE !important;
+}
+</style>
+
 </head>
 <body class="bg-vintage-paper text-espresso-900 font-sans min-h-full flex flex-col justify-between selection:bg-terracotta selection:text-white antialiased">
 <header class="border-b border-crema-300 bg-crema-100/90 backdrop-blur-sm sticky top-0 z-30 shadow-xs">
 <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
 <!-- Brand Crest & Italian Bottega Typography -->
 <div class="flex items-center space-x-3.5">
-<div class="w-12 h-12 rounded-full wax-seal flex items-center justify-center text-crema-100 shadow-md text-2xl select-none">
+<div class="w-12 h-12 flex items-center justify-center bg-transparent text-3xl select-none">
 <span class="transform -rotate-6">🍅</span>
 </div>
 <div>
@@ -213,7 +229,7 @@
             Caffè Pomodoro
           </h1>
 <p class="font-typewriter text-xs sm:text-sm text-espresso-600 tracking-wider uppercase mt-1">
-            Bottega del Tempo · Dal 1962
+            Bottega del Tempo — Raccolto &amp; Caffè
           </p>
 </div>
 </div>
@@ -250,11 +266,11 @@
 </button>
 <button class="mode-tab px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base text-espresso-800 hover:text-espresso-900 transition-all duration-200 flex items-center space-x-2" id="mode-short">
 <span>☕</span>
-<span class="font-serif tracking-wide">Corta · 5 min.</span>
+<span class="font-serif tracking-wide">Espresso · 5 min.</span>
 </button>
 <button class="mode-tab px-5 sm:px-7 py-2.5 rounded-xl font-medium text-sm sm:text-base text-espresso-800 hover:text-espresso-900 transition-all duration-200 flex items-center space-x-2" id="mode-long">
-<span>🌿</span>
-<span class="font-serif tracking-wide">Lunga · 15 min.</span>
+<span>☕☕</span>
+<span class="font-serif tracking-wide">Lungo · 15 min.</span>
 </button>
 </div>
 <!-- Analog Clock Dial Section -->
@@ -451,7 +467,7 @@
 <!-- Short break slider (min 1 min) -->
 <div>
 <div class="flex justify-between text-sm font-medium mb-1">
-<span class="text-espresso-800">☕ Pausa Corta (Kurze Pause)</span>
+<span class="text-espresso-800">☕ Espresso (Kurze Pause)</span>
 <span class="font-typewriter text-terracotta font-bold text-sm sm:text-base" id="short-val">5 Min</span>
 </div>
 <input class="w-full cursor-pointer" id="input-short" max="30" min="1" step="1" type="range" value="5"/>
@@ -464,7 +480,7 @@
 <!-- Long break slider (min 1 min) -->
 <div>
 <div class="flex justify-between text-sm font-medium mb-1">
-<span class="text-espresso-800">🌿 Pausa Lunga (Lange Pause)</span>
+<span class="text-espresso-800">☕☕ Lungo (Lange Pause)</span>
 <span class="font-typewriter text-terracotta font-bold text-sm sm:text-base" id="long-val">15 Min</span>
 </div>
 <input class="w-full cursor-pointer" id="input-long" max="60" min="1" step="1" type="range" value="15"/>
@@ -755,12 +771,12 @@ function switchMode(newMode, resetTimer = true) {
       } else if (newMode === 'short') {
         modeShortBtn.classList.add('bg-espresso-900', 'text-crema-50', 'shadow-md', 'active');
         modeShortBtn.classList.remove('text-espresso-800');
-        phaseBadge.textContent = 'Pausa Corta';
+        phaseBadge.textContent = 'Espresso';
         progressRing.setAttribute('stroke', '#5B7059');
       } else {
         modeLongBtn.classList.add('bg-espresso-900', 'text-crema-50', 'shadow-md', 'active');
         modeLongBtn.classList.remove('text-espresso-800');
-        phaseBadge.textContent = 'Pausa Lunga';
+        phaseBadge.textContent = 'Lungo';
         progressRing.setAttribute('stroke', '#D4AF37');
       }
 
@@ -1200,8 +1216,8 @@ function switchMode(newMode, resetTimer = true) {
         }
 
         document.querySelector('#mode-work span:last-child').textContent = `Lavoro · ${inputWork.value} min.`;
-        document.querySelector('#mode-short span:last-child').textContent = `Corta · ${inputShort.value} min.`;
-        document.querySelector('#mode-long span:last-child').textContent = `Lunga · ${inputLong.value} min.`;
+        document.querySelector('#mode-short span:last-child').textContent = `Espresso · ${inputShort.value} min.`;
+        document.querySelector('#mode-long span:last-child').textContent = `Lungo · ${inputLong.value} min.`;
 
         if (!state.isRunning) {
           state.timeLeft = state.durations[state.mode];
